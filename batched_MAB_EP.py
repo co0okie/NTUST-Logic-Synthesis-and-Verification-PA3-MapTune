@@ -103,7 +103,7 @@ with open(genlib_origin, 'r') as f:
 f.close()
 num_arms=len(f_lines)
 mab = EpsilonGreedyMAB(num_arms, 0.2, sample_gate, batch_size)
-best_cells = None
+best_cells = []
 best_result = (float('inf'), float('inf'))  
 best_reward = -float('inf')  # Track best reward
 
@@ -130,6 +130,71 @@ for i in range(num_iterations):
     print("Current best result: ", best_result)
         # Update best results tracking here as needed
     mab.update_batch(batch_actions, batch_rewards)
+end=time.time()
+runtime=end-start
+
+print("Best Delay:", best_result[0])
+print("Best Area:", best_result[1])
+print("Best Reward:", best_reward)
+print("Total time:", runtime)
+
+
+
+limit_size = len(best_cells) # 假設初始傳入的 best_cells 大小即為 |S_MapTune|
+total_cells = len(f_lines)   # 總 candidate cell 數量
+
+iteration = 0
+no_better_reward_round = 0
+while no_better_reward_round < 2:
+    iteration += 1
+    print(f"round {iteration} ", end="")
+    candidates = []
+    if len(best_cells) >= limit_size:
+        # 不行增加：只能嘗試移除
+        for i in range(len(best_cells)):
+            candidates.append(best_cells[:i] + best_cells[i+1:])
+    else:
+        # 可以增加：切換所有 cell 的狀態
+        best_set = set(best_cells) # 用 set 加速查詢
+        for i in range(total_cells):
+            if i in best_set:
+                candidates.append([c for c in best_cells if c != i])
+            else:
+                candidates.append(best_cells + [i])
+                
+    round_best_reward = -float('inf')
+    round_best_cells = None
+    round_best_result = None
+    found_better = False
+
+    for selected_cells in candidates:
+        delay, area = technology_mapper(genlib_origin, selected_cells)
+        
+        if np.isnan(delay) or np.isnan(area):
+            reward = -float('inf')
+        else:
+            reward = calculate_reward(max_delay, max_area, delay, area)
+            
+        if reward > round_best_reward:
+            round_best_reward = reward
+            round_best_cells = selected_cells
+            round_best_result = (delay, area)
+            
+        if reward > best_reward:
+            best_reward = reward
+            best_result = (delay, area)
+            best_cells = selected_cells
+            print(f"success, best reward: {best_reward}, result: {best_result}, cells count: {len(best_cells)}")
+            found_better = True
+            break
+            
+    if not found_better and round_best_cells is not None:
+        best_cells = round_best_cells
+        print(f"fail, reward: {round_best_reward}, result: {round_best_result}, cells count: {len(best_cells)}")
+        no_better_reward_round += 1
+    else:
+        no_better_reward_round = 0
+
 end=time.time()
 runtime=end-start
 

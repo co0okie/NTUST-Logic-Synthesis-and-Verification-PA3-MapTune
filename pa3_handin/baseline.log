@@ -1,0 +1,16 @@
+$ for b in benchmarks/{s13207,c2670,b20_1}.bench;do for l in {7nm,gf180mcu_ff_125C,gf180mcu_tt_025C,nan45,sky130};do pa3_handin/script/mapping.py $l.lib $l.genlib $b;done;done
+[s13207.bench][7nm.genlib] Delay: 645.03 ps | Area: 1949.99
+[s13207.bench][gf180mcu_ff_125C.genlib] Delay: 14748.01 ps | Area: 33061.91
+[s13207.bench][gf180mcu_tt_025C.genlib] Delay: 5901.33 ps | Area: 33217.77
+[s13207.bench][nan45.genlib] Delay: 703.66 ps | Area: 1920.52
+[s13207.bench][sky130.genlib] Delay: 3228.11 ps | Area: 10493.81
+[c2670.bench][7nm.genlib] Delay: 155.37 ps | Area: 461.66
+[c2670.bench][gf180mcu_ff_125C.genlib] Delay: 8680.05 ps | Area: 7371.48
+[c2670.bench][gf180mcu_tt_025C.genlib] Delay: 3442.8 ps | Area: 7580.03
+[c2670.bench][nan45.genlib] Delay: 441.04 ps | Area: 493.96
+[c2670.bench][sky130.genlib] Delay: 1907.89 ps | Area: 2308.46
+[b20_1.bench][7nm.genlib] Delay: 656.76 ps | Area: 5034.18
+[b20_1.bench][gf180mcu_ff_125C.genlib] Delay: 37376.29 ps | Area: 103310.5
+[b20_1.bench][gf180mcu_tt_025C.genlib] Delay: 15583.81 ps | Area: 102943.91
+[b20_1.bench][nan45.genlib] Delay: 1573.15 ps | Area: 6641.49
+[b20_1.bench][sky130.genlib] Delay: 6660.12 ps | Area: 33651.02

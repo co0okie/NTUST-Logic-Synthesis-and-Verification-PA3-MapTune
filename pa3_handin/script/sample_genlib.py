@@ -33,7 +33,6 @@ def sample_genlib(input_genlib, output_genlib, total_target_count):
         print(f"警告：強制保留的細胞數量 ({num_keep}) 已大於或等於目標總數 ({total_target_count})")
         num_random_needed = 0
     elif num_random_needed > len(f_lines):
-        print("警告：目標抽樣數大於可用的總細胞數！")
         num_random_needed = len(f_lines)
 
     # 進行隨機抽樣 (不重複抽樣)

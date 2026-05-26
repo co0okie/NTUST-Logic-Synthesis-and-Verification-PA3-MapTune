@@ -1,0 +1,214 @@
+\documentclass[12pt]{article}
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{caption}
+\usepackage{float}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    backgroundcolor=\color[HTML]{EEEEEE},
+    commentstyle=\color[HTML]{6A9955},
+    keywordstyle=\color[HTML]{0000FF},
+    stringstyle=\color[HTML]{DD3300},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=t,
+    keepspaces=true,
+    numbers=none,
+    numbersep=5pt,
+    numberstyle=\tiny\color[rgb]{0.5,0.5,0.5},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=single,
+    escapeinside={<@}{@>}
+}
+
+\usepackage{xeCJK}
+\setmainfont{Times New Roman}
+\setCJKmainfont[AutoFakeBold=true,AutoFakeSlant=true]{TW-Kai}
+
+\usepackage{indentfirst}
+\setlength{\parindent}{0em}
+
+\PassOptionsToPackage{hyphens}{url}\usepackage[hidelinks]{hyperref}
+\newcommand{\algorithmautorefname}{Algorithm}
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\ref*{#1} \nameref*{#1}}}
+
+\begin{document}
+
+\title{Logic Synthesis and Verification \\ PA3 Reinforcement Learning for Logic Synthesis Library Tuning for Technology Mapping}
+\author{B11107051 李品翰}
+\date{}
+\maketitle
+
+\section*{Assignment 1 (30\%): Environment setup and baseline replication}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth]{screenshot_a1.png}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\caption{Baseline Technology Mapping Results}
+\begin{tabular}{llrr}
+\toprule
+\textbf{Benchmark} & \textbf{Library} & \textbf{Delay (ps)} & \textbf{Area ($\mu m^2$)} \\
+\midrule
+\multirow{5}{*}{s13207} 
+ & 7nm & 645.03 & 1949.99 \\
+ & gf180mcu\_ff\_125C & 14748.01 & 33061.91 \\
+ & gf180mcu\_tt\_025C & 5901.33 & 33217.77 \\
+ & nan45 & 703.66 & 1920.52 \\
+ & sky130 & 3228.11 & 10493.81 \\
+\midrule
+\multirow{5}{*}{c2670} 
+ & 7nm & 155.37 & 461.66 \\
+ & gf180mcu\_ff\_125C & 8680.05 & 7371.48 \\
+ & gf180mcu\_tt\_025C & 3442.80 & 7580.03 \\
+ & nan45 & 441.04 & 493.96 \\
+ & sky130 & 1907.89 & 2308.46 \\
+\midrule
+\multirow{5}{*}{b20\_1} 
+ & 7nm & 656.76 & 5034.18 \\
+ & gf180mcu\_ff\_125C & 37376.29 & 103310.50 \\
+ & gf180mcu\_tt\_025C & 15583.81 & 102943.91 \\
+ & nan45 & 1573.15 & 6641.49 \\
+ & sky130 & 6660.12 & 33651.02 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section*{Assignment 2 (30\%): Randomly sampling replication}
+
+從 \autoref{fig:random_sample} 可以看出，即便只取 75 \~{} 150 個 cells (藍色部分)，仍然可能得到相當不錯的解，證明了 partial library 仍有機會贏過 full library。
+
+\input{random_sample.tex}
+
+\section*{Assignment 3 (40\%): Standing on the shoulders of MapTune}
+
+基於 MapTune 的結果 $S_{MapTune}$，我透過執行數輪 First-Choice Local Search，也就是不停尋找當前最佳解的鄰居，一一嘗試是否能找到更好的解。如 \autoref{alg:local_search} 所示，鄰居即為將當前選擇 $S_{curr}$ 加入或移除一個 cell 之後的新集合，而為了確保 $|S_{new}| \leq |S_{MapTune}|$，若當前選擇數量已經達到上限，將不允許加入 cell，只允許移除。若該輪沒有找到更好的解，則選擇本輪相對最好的解作為下一輪的初始解。若連續 2 輪沒有找到更好的解則結束，設定為 2 輪的原因是: 令當前最佳解為 $S_{best}$，若本輪沒找到更好的解，則會選擇本輪相對好的解 $S_{best}'$ 進入第二輪，由於 $S_{best}$ 與 $S_{best}'$ 互為鄰居，若第二輪也沒有找到更好的解，則必定會選擇 $S_{best}$ 進入第三輪，如此將產生不必要的重複嘗試，因此 2 輪就足夠了。
+
+\begin{center}
+\captionof{algorithm}{First-Choice Local Search for Library Tuning}
+\label{alg:local_search}
+\hrule height.5pt depth0pt \kern4pt
+\begin{algorithmic}[1]
+\Require $\mathcal{F}$ (set of all available cells), $S_{MapTune}$ (initial selected cells from MapTune)
+\State $S_{best} \gets S_{MapTune}, S_{curr} \gets S_{MapTune}$
+\State $R_{best} \gets \text{CalculateReward}(S_{MapTune})$
+\State $P_{no\_improv} \gets 0$ \Comment{Counter for consecutive non-improving rounds}
+
+\While{$P_{no\_improv} < 2$}
+    \State $R_{round} \gets -\infty$, $S_{round} \gets \emptyset$
+    \State $found\_better \gets \textbf{false}$
+
+    \For{each $c \in \mathcal{F}$}
+        \If{$c \in S_{curr}$}
+            \State $S_{sel} \gets S_{curr} \setminus \{c\}$ \Comment{Remove currently selected cell}
+        \Else
+            \If{$|S_{curr}| \geq |S_{MapTune}|$}
+                \State \textbf{continue} \Comment{Skip adding if budget is reached}
+            \EndIf
+            \State $S_{sel} \gets S_{curr} \cup \{c\}$ \Comment{Add unselected cell}
+        \EndIf
+
+        \State $r \gets \text{CalculateReward}(S_{sel})$
+        
+        \If{$r > R_{round}$}
+            \State $R_{round} \gets r, S_{round} \gets S_{sel}$
+        \EndIf
+        
+        \If{$r > R_{best}$}
+            \State $R_{best} \gets r, S_{best} \gets S_{sel}$
+            \State $S_{curr} \gets S_{sel}$
+            \State $P_{no\_improv} \gets 0$
+            \State $found\_better \gets \textbf{true}$
+            \State \textbf{break} \Comment{Accept the first better solution immediately}
+        \EndIf
+    \EndFor
+
+    \If{\textbf{not} $found\_better$}
+        \State $S_{curr} \gets S_{round}$ \Comment{Fallback to the best candidate in this round}
+        \State $P_{no\_improv} \gets P_{no\_improv} + 1$
+    \EndIf
+\EndWhile
+
+\State \textbf{return} $S_{best}, R_{best}$
+\end{algorithmic}
+\kern2pt\hrule\relax
+\end{center}
+
+以 c2670.bench + nan45.genlib 選擇 54 個 cells 為例，如下方執行結果所示，在 MapTune 完成 100 個 iteration，得到約 -0.873 的 reward 之後，我的程式成功找到了 7 次更好的解，最終將 reward 提升到了約 -0.858。其中 success 代表該輪找到了更好的解，fail 則否。
+
+\begin{lstlisting}
+$ python batched_MAB_EP.py 54 benchmarks/c2670.bench nan45.genlib
+select 54 cells from 82 cells
+keep 12 cells
+Baseline Delay: 441.04
+Baseline Area: 493.96
+Batch iteration: 0
+Current best reward:  -0.9626917908272263
+Current best result:  (440.53, 458.32)
+Batch iteration: 1
+Current best reward:  -0.9626917908272263
+Current best result:  (440.53, 458.32)
+Batch iteration: 2
+Current best reward:  -0.8862500973818875
+Current best result:  (366.33, 467.1)
+
+...
+
+Batch iteration: 99
+Current best reward:  -0.8726437910806986
+Current best result:  (359.47, 461.51)
+Best Delay: 359.47
+Best Area: 461.51
+Best Reward: -0.8726437910806986
+Total time: 111.19865918159485
+  1: success, best reward: -0.8692, delay: 355.85, area: 462.57, cells count: 53
+  2: success, best reward: -0.8671, delay: 359.29, area: 455.92, cells count: 54
+  3: success, best reward: -0.8664, delay: 354.78, area: 460.98, cells count: 53
+  4: success, best reward: -0.8651, delay: 353.51, area: 461.24, cells count: 52
+  5: success, best reward: -0.8602, delay: 349.11, area: 461.78, cells count: 53
+  6: success, best reward: -0.8600, delay: 348.12, area: 462.84, cells count: 52
+  7: success, best reward: -0.8584, delay: 350.25, area: 458.32, cells count: 51
+  8: fail, round best reward: -0.8584, delay: 350.25, area: 458.32, cells count: 52
+  9: fail, round best reward: -0.8584, delay: 350.25, area: 458.32, cells count: 51
+Best Reward: -0.8583977999741299
+Best Delay: 350.25
+Best Area: 458.32
+Best Cells Count: 51
+Total time: 149.6730215549469
+\end{lstlisting}
+
+\autoref{tab:optimization_results} 是對 s13207、c2670、b20\_1 分別使用 nan45、sky130 在 budgets 為 30\%、50\%、70\% 時，MapTune (batched\_MAB\_EP) 與我的方法的結果比較，可以發現我的方法成功達成了 $S_{new} \le S_{MapTune}$ 且 $ADP_{new} < ADP_{MapTune}$ 的目標。
+
+然而從執行時間可以發現，此方法仍然不太穩定，有些 case 比 MapTune 快上許多，但有些卻花了 MapTune 3 倍以上的時間執行。且 Local Search 並不能保證找到更優解，有可能在一開始就連續 2 輪失敗導致結束，因此未來或許可以嘗試加入了溫度的 Simulated Annealing，使其跳脫 Local Maximum 以找到更好的解。
+
+\input{outperform.tex}
+
+\section*{Conclusion}
+
+本次作業透過 MapTune 框架探討了 partial library 對於邏輯合成中 PPA 的影響。實驗結果不僅驗證了縮減後的元件庫能帶來更佳的 Area-Delay Product (ADP)，我所嘗試的 First-Choice Local Search 演算法也成功在各個 benchmark 與 budget 限制下，穩定超越了原本 MapTune 的基準測試結果，同時嚴格滿足了 $|S_{new}| \le |S_{MapTune}|$ 的條件限制。
+
+雖然 Greedy 策略在執行時間上存在較大波動，且容易陷入局部最佳解，但整體而言，本實驗充分展示了自動化 Library Tuning 在 EDA 領域的巨大潛力。未來若能結合 Simulated Annealing 等更進階的啟發式演算法，預期能進一步提升優化穩定度與探索空間。
+
+\section*{Source Code}
+
+完整實驗用到的程式碼可以在 \url{https://github.com/co0okie/NTUST-Logic-Synthesis-and-Verification-PA3-MapTune} 找到。
+
+\end{document}

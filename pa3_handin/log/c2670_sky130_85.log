@@ -1,0 +1,334 @@
+select 85 cells from 325 cells
+keep 18 cells
+Baseline Delay: 1907.89
+Baseline Area: 2308.46
+Batch iteration: 0
+Current best reward:  -1.0625343379723537
+Current best result:  (1789.31, 2778.92)
+Batch iteration: 1
+Current best reward:  -1.0625343379723537
+Current best result:  (1789.31, 2778.92)
+Batch iteration: 2
+Current best reward:  -1.0526640149074775
+Current best result:  (1878.89, 2597.49)
+Batch iteration: 3
+Current best reward:  -1.0526640149074775
+Current best result:  (1878.89, 2597.49)
+Batch iteration: 4
+Current best reward:  -1.0526640149074775
+Current best result:  (1878.89, 2597.49)
+Batch iteration: 5
+Current best reward:  -1.0526640149074775
+Current best result:  (1878.89, 2597.49)
+Batch iteration: 6
+Current best reward:  -1.0526640149074775
+Current best result:  (1878.89, 2597.49)
+Batch iteration: 7
+Current best reward:  -1.0526640149074775
+Current best result:  (1878.89, 2597.49)
+Batch iteration: 8
+Current best reward:  -1.0526640149074775
+Current best result:  (1878.89, 2597.49)
+Batch iteration: 9
+Current best reward:  -1.0526640149074775
+Current best result:  (1878.89, 2597.49)
+Batch iteration: 10
+Current best reward:  -1.0526640149074775
+Current best result:  (1878.89, 2597.49)
+Batch iteration: 11
+Current best reward:  -1.0526640149074775
+Current best result:  (1878.89, 2597.49)
+Batch iteration: 12
+Current best reward:  -1.021942723157603
+Current best result:  (1853.87, 2481.13)
+Batch iteration: 13
+Current best reward:  -1.021942723157603
+Current best result:  (1853.87, 2481.13)
+Batch iteration: 14
+Current best reward:  -1.021942723157603
+Current best result:  (1853.87, 2481.13)
+Batch iteration: 15
+Current best reward:  -1.021942723157603
+Current best result:  (1853.87, 2481.13)
+Batch iteration: 16
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 17
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 18
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 19
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 20
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 21
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 22
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 23
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 24
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 25
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 26
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 27
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 28
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 29
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 30
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 31
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 32
+Current best reward:  -1.0043545149360793
+Current best result:  (1554.63, 2857.74)
+Batch iteration: 33
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 34
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 35
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 36
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 37
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 38
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 39
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 40
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 41
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 42
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 43
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 44
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 45
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 46
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 47
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 48
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 49
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 50
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 51
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 52
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 53
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 54
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 55
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 56
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 57
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 58
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 59
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 60
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 61
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 62
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 63
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 64
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 65
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 66
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 67
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 68
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 69
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 70
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 71
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 72
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 73
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 74
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 75
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 76
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 77
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 78
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 79
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 80
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 81
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 82
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 83
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 84
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 85
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 86
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 87
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 88
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 89
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 90
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 91
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 92
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 93
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 94
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 95
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 96
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 97
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 98
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Batch iteration: 99
+Current best reward:  -0.9748415629811742
+Current best result:  (1709.33, 2448.6)
+Best Delay: 1709.33
+Best Area: 2448.6
+Best Reward: -0.9748415629811742
+Total time: 184.361421585083
+  1: success, best reward: -0.9504, delay: 1570.97, area: 2532.43, cells count: 84
+  2: success, best reward: -0.9448, delay: 1573.45, area: 2498.65, cells count: 83
+  3: success, best reward: -0.9401, delay: 1574.3, area: 2472.37, cells count: 84
+  4: success, best reward: -0.9384, delay: 1574.3, area: 2463.61, cells count: 83
+  5: success, best reward: -0.9382, delay: 1574.3, area: 2462.36, cells count: 84
+  6: success, best reward: -0.9101, delay: 1476.35, area: 2471.12, cells count: 85
+  7: fail, round best reward: -0.9101, delay: 1476.35, area: 2471.12, cells count: 84
+  8: success, best reward: -0.9081, delay: 1481.14, area: 2452.35, cells count: 85
+  9: success, best reward: -0.9063, delay: 1481.14, area: 2442.34, cells count: 84
+ 10: success, best reward: -0.9014, delay: 1451.02, area: 2466.12, cells count: 85
+ 11: success, best reward: -0.8952, delay: 1463.07, area: 2412.31, cells count: 84
+ 12: success, best reward: -0.8946, delay: 1455.21, area: 2422.32, cells count: 83
+ 13: success, best reward: -0.8944, delay: 1452.35, area: 2426.08, cells count: 84
+ 14: success, best reward: -0.8942, delay: 1455.21, area: 2419.82, cells count: 83
+ 15: success, best reward: -0.8928, delay: 1451.56, area: 2418.57, cells count: 84
+ 16: success, best reward: -0.8927, delay: 1456.43, area: 2409.81, cells count: 85
+ 17: success, best reward: -0.8924, delay: 1446.64, area: 2424.83, cells count: 84
+ 18: success, best reward: -0.8884, delay: 1447.84, area: 2401.05, cells count: 85
+ 19: success, best reward: -0.8877, delay: 1446.96, area: 2398.55, cells count: 84
+ 20: fail, round best reward: -0.8877, delay: 1446.96, area: 2398.55, cells count: 85
+ 21: fail, round best reward: -0.8877, delay: 1446.96, area: 2398.55, cells count: 84
+Best Reward: -0.8876971144778372
+Best Delay: 1446.96
+Best Area: 2398.55
+Best Cells Count: 84
+Total time: 380.8282239437103

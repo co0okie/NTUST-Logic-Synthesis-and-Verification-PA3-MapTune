@@ -1,0 +1,6 @@
+/pa3_handin/report/*
+!/pa3_handin/report/*.tex
+!/pa3_handin/report/*.pdf
+/temp_blifs/
+/abc.history
+/gen_newlibs/benchmarks/

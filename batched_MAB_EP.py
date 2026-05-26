@@ -11,31 +11,57 @@ genlib_origin = sys.argv[-1]
 lib_origin = genlib_origin[:-7] + '.lib'
 design = sys.argv[-2]
 sample_gate = int(sys.argv[-3])
-temp_blif = "temp_blifs/" + design[:-5] + "_bs_ep_temp.blif"
 lib_path = "gen_newlibs/"
 
-start=time.time()
-abc_cmd = "read %s;read %s; map -a; write %s; read %s;read -m %s; ps; topo; upsize; dnsize; stime; " % (genlib_origin, design, temp_blif, lib_origin, temp_blif)
-res = subprocess.check_output(('abc', '-c', abc_cmd))
-match_d = re.search(r"Delay\s*=\s*([\d.]+)\s*ps", str(res))
-match_a = re.search(r"Area\s*=\s*([\d.]+)", str(res))
-# Baseline
-max_delay = float(match_d.group(1))
-max_area = float(match_a.group(1))
+start_time = time.time()
 
-print("Baseline Delay:", max_delay)
-print("Baseline Area:", max_area)
+def run_abc(input_lib, input_genlib, input_design):
+    os.makedirs("temp_blifs", exist_ok=True)
+    
+    genlib_basename = os.path.basename(input_genlib)
+    design_basename = os.path.basename(input_design)
+    temp_blif = f"temp_blifs/{design_basename}_temp.blif"
+    
+    abc_cmd = f"read {input_genlib}; read {input_design}; map; write {temp_blif}; read {input_lib}; read -m {temp_blif}; ps; topo; upsize; dnsize; stime;"
+    
+    try:
+        res = subprocess.check_output(['abc', '-c', abc_cmd], text=True)
+    except subprocess.CalledProcessError as e:
+        print("ABC error:", e)
+        return float("NaN"), float("NaN")
+        
+    match_d = re.search(r"Delay\s*=\s*([\d.]+)\s*ps", res)
+    match_a = re.search(r"Area\s*=\s*([\d.]+)", res)
+    
+    delay = float(match_d.group(1)) if match_d else float("NaN")
+    area = float(match_a.group(1)) if match_a else float("NaN")
+    
+    return delay, area
+
+def read_genlib_origin(genlib_origin):
+    f_keep = []
+    f_lines = []
+    
+    keep_identifiers = (
+        "GATE BUF", "GATE INV",
+        "GATE sky130_fd_sc_hd__buf", "GATE sky130_fd_sc_hd__inv",
+        "GATE gf180mcu_fd_sc_mcu7t5v0__buf", "GATE gf180mcu_fd_sc_mcu7t5v0__inv"
+    )
+    
+    with open(genlib_origin, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if line.startswith("GATE"):
+                if line.startswith(keep_identifiers):
+                    f_keep.append(line)
+                else:
+                    f_lines.append(line)
+    return f_keep, f_lines
+
+f_keep, f_lines = read_genlib_origin(genlib_origin)
 
 # Mapper call
-def technology_mapper(genlib_origin, partial_cell_library):
-    with open(genlib_origin, 'r') as f:
-        #f_lines = [line.strip() for line in f if line.startswith("GATE") and not any(substr in line for substr in ["BUF", "INV", "inv", "buf"])]
-        f_lines = [line.strip() for line in f if line.startswith("GATE") and not line.startswith("GATE BUF") and not line.startswith("GATE INV") and not line.startswith("GATE sky130_fd_sc_hd__buf") and not line.startswith("GATE sky130_fd_sc_hd__inv") and not line.startswith("GATE gf180mcu_fd_sc_mcu7t5v0__buf") and not line.startswith("GATE gf180mcu_fd_sc_mcu7t5v0__inv") and not line.startswith("GATE gf180mcu_fd_sc_mcu7t5v0__buf") and not line.startswith("GATE gf180mcu_fd_sc_mcu7t5v0__inv")]
-    f.close()
-    with open(genlib_origin, 'r') as f:
-        #f_keep = [line.strip() for line in f if any(substr in line for substr in ["BUF", "INV", "inv", "buf"])]
-        f_keep = [line.strip() for line in f if line.startswith("GATE BUF") or line.startswith("GATE INV") or line.startswith("GATE sky130_fd_sc_hd__buf") or line.startswith("GATE sky130_fd_sc_hd__inv") or line.startswith("GATE gf180mcu_fd_sc_mcu7t5v0__buf") or line.startswith("GATE gf180mcu_fd_sc_mcu7t5v0__inv") or line.startswith("GATE gf180mcu_fd_sc_mcu7t5v0__buf") or line.startswith("GATE gf180mcu_fd_sc_mcu7t5v0__inv")]
-    f.close()
+def technology_mapper(partial_cell_library):
     lines_partial = [f_lines[i] for i in partial_cell_library]
     lines_partial = lines_partial + f_keep
 
@@ -43,18 +69,18 @@ def technology_mapper(genlib_origin, partial_cell_library):
     with open(output_genlib_file, 'w') as out_gen:
         for line in lines_partial:
             out_gen.write(line + '\n')
-    out_gen.close() 
+    out_gen.close()
 
-    abc_cmd = "read %s;read %s; map -a; write %s; read %s;read -m %s; ps; topo; upsize; dnsize; stime; " % (output_genlib_file, design, temp_blif, lib_origin, temp_blif)
-    res = subprocess.check_output(('abc', '-c', abc_cmd))
-    match_d = re.search(r"Delay\s*=\s*([\d.]+)\s*ps", str(res))
-    match_a = re.search(r"Area\s*=\s*([\d.]+)", str(res))
-    if match_d and match_a:
-        delay = float(match_d.group(1))
-        area = float(match_a.group(1))
-    else:
-        delay, area = float("NaN"),float("NaN")
-    return delay, area
+    return run_abc(lib_origin, output_genlib_file, design)
+
+
+print(f"select {sample_gate} cells from {len(f_lines)} cells")
+print(f"keep {len(f_keep)} cells")
+
+max_delay, max_area = run_abc(lib_origin, genlib_origin, design)
+
+print("Baseline Delay:", max_delay)
+print("Baseline Area:", max_area)
 
 # Reward calculation
 def calculate_reward(max_delay, max_area, delay, area):
@@ -115,7 +141,7 @@ for i in range(num_iterations):
     batch_actions = mab.select_batch_actions()
     batch_rewards = []
     for selected_cells in batch_actions:
-        delay, area = technology_mapper(genlib_origin, selected_cells)
+        delay, area = technology_mapper(selected_cells)
         if np.isnan(delay) or np.isnan(area):
             reward = -float('inf')
         else:
@@ -130,75 +156,57 @@ for i in range(num_iterations):
     print("Current best result: ", best_result)
         # Update best results tracking here as needed
     mab.update_batch(batch_actions, batch_rewards)
-end=time.time()
-runtime=end-start
 
 print("Best Delay:", best_result[0])
 print("Best Area:", best_result[1])
 print("Best Reward:", best_reward)
-print("Total time:", runtime)
+print("Total time:", time.time() - start_time)
 
 
-
-limit_size = len(best_cells) # 假設初始傳入的 best_cells 大小即為 |S_MapTune|
-total_cells = len(f_lines)   # 總 candidate cell 數量
+total_cells = len(f_lines)
 
 iteration = 0
 no_better_reward_round = 0
+best_cells = set(best_cells)
+best = (best_reward, best_result[0], best_result[1], best_cells)
+current = best
 while no_better_reward_round < 2:
     iteration += 1
-    print(f"round {iteration} ", end="")
-    candidates = []
-    if len(best_cells) >= limit_size:
-        # 不行增加：只能嘗試移除
-        for i in range(len(best_cells)):
-            candidates.append(best_cells[:i] + best_cells[i+1:])
-    else:
-        # 可以增加：切換所有 cell 的狀態
-        best_set = set(best_cells) # 用 set 加速查詢
-        for i in range(total_cells):
-            if i in best_set:
-                candidates.append([c for c in best_cells if c != i])
-            else:
-                candidates.append(best_cells + [i])
+    print(f"{iteration:>3}: ", end="")
                 
-    round_best_reward = -float('inf')
-    round_best_cells = None
-    round_best_result = None
-    found_better = False
+    round_best = (-float('inf'), float('inf'), float('inf'), [])  # (reward, delay, area, selected_cells)
 
-    for selected_cells in candidates:
-        delay, area = technology_mapper(genlib_origin, selected_cells)
+    for cell in range(total_cells):
+        if cell in current[3]:
+            selected_cells = current[3] - {cell}
+        else:
+            if len(current[3]) >= sample_gate:
+                continue
+            selected_cells = current[3] | {cell}
+
+        delay, area = technology_mapper(selected_cells)
         
         if np.isnan(delay) or np.isnan(area):
             reward = -float('inf')
         else:
             reward = calculate_reward(max_delay, max_area, delay, area)
             
-        if reward > round_best_reward:
-            round_best_reward = reward
-            round_best_cells = selected_cells
-            round_best_result = (delay, area)
+        if reward > round_best[0]:
+            round_best = (reward, delay, area, selected_cells)
             
-        if reward > best_reward:
-            best_reward = reward
-            best_result = (delay, area)
-            best_cells = selected_cells
-            print(f"success, best reward: {best_reward}, result: {best_result}, cells count: {len(best_cells)}")
-            found_better = True
+        if reward > best[0]:
+            best = (reward, delay, area, selected_cells)
+            current = best
+            print(f"success, best reward: {best[0]:.4f}, delay: {best[1]}, area: {best[2]}, cells count: {len(best[3])}")
+            no_better_reward_round = 0
             break
-            
-    if not found_better and round_best_cells is not None:
-        best_cells = round_best_cells
-        print(f"fail, reward: {round_best_reward}, result: {round_best_result}, cells count: {len(best_cells)}")
+    else: # finish without break (finding new record), jump to round best solution
+        current = round_best
+        print(f"fail, round best reward: {round_best[0]:.4f}, delay: {round_best[1]}, area: {round_best[2]}, cells count: {len(round_best[3])}")
         no_better_reward_round += 1
-    else:
-        no_better_reward_round = 0
 
-end=time.time()
-runtime=end-start
-
-print("Best Delay:", best_result[0])
-print("Best Area:", best_result[1])
-print("Best Reward:", best_reward)
-print("Total time:", runtime)
+print("Best Reward:", best[0])
+print("Best Delay:", best[1])
+print("Best Area:", best[2])
+print("Best Cells Count:", len(best[3]))
+print("Total time:", time.time() - start_time)

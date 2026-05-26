@@ -1,0 +1,182 @@
+$ for l in *.log;do echo $l;grep -e "Best Reward" -e "Best Delay" -e "Best Area" -e "Best
+Cells" -e "Total time" $l;done
+b20_1_nan45_16.log
+Best Delay: 1223.85
+Best Area: 7726.5
+Best Reward: -0.9513441932734324
+Total time: 532.9075009822845
+Best Reward: -0.9073038385193721
+Best Delay: 1162.3
+Best Area: 7399.85
+Best Cells Count: 16
+Total time: 730.1790401935577
+b20_1_nan45_35.log
+Best Delay: 1434.47
+Best Area: 7103.26
+Best Reward: -0.9875446984217263
+Total time: 981.7600741386414
+Best Reward: -0.9625284540433496
+Best Delay: 1400.69
+Best Area: 6910.68
+Best Cells Count: 34
+Total time: 1205.3516294956207
+b20_1_nan45_54.log
+Best Delay: 1402.04
+Best Area: 6978.24
+Best Reward: -0.967687930159902
+Total time: 488.1334283351898
+Best Reward: -0.9472555857023529
+Best Delay: 1336.58
+Best Area: 7014.15
+Best Cells Count: 54
+Total time: 725.0354058742523
+b20_1_sky130_154.log
+Best Delay: 6286.38
+Best Area: 35713.0
+Best Reward: -1.0008600128140346
+Total time: 679.0944902896881
+Best Reward: -0.9735696834147702
+Best Delay: 5962.02
+Best Area: 35630.42
+Best Cells Count: 154
+Total time: 1700.8787553310394
+b20_1_sky130_222.log
+Best Delay: 6147.25
+Best Area: 34779.61
+Best Reward: -0.9767032845734893
+Total time: 713.0518629550934
+Best Reward: -0.9294654228087105
+Best Delay: 5611.83
+Best Area: 34501.84
+Best Cells Count: 221
+Total time: 2191.9727714061737
+b20_1_sky130_85.log
+Best Delay: 6392.3
+Best Area: 36999.23
+Best Reward: -1.0272703988239384
+Total time: 659.3704898357391
+Best Reward: -0.9641015934207673
+Best Delay: 5735.84
+Best Area: 36318.58
+Best Cells Count: 85
+Total time: 1759.1702961921692
+c2670_nan45_16.log
+Best Delay: 365.24
+Best Area: 513.38
+Best Reward: -0.9277346110737851
+Total time: 110.3621175289154
+Best Reward: -0.8481544663359034
+Best Delay: 352.58
+Best Area: 444.49
+Best Cells Count: 16
+Total time: 157.06106519699097
+c2670_nan45_35.log
+Best Delay: 367.25
+Best Area: 458.05
+Best Reward: -0.8787239536642493
+Total time: 112.97671818733215
+Best Reward: -0.8693503044161831
+Best Delay: 365.83
+Best Area: 450.07
+Best Cells Count: 35
+Total time: 132.97379660606384
+c2670_nan45_54.log
+Best Delay: 359.47
+Best Area: 461.51
+Best Reward: -0.8726437910806986
+Total time: 111.19865918159485
+Best Reward: -0.8583977999741299
+Best Delay: 350.25
+Best Area: 458.32
+Best Cells Count: 51
+Total time: 149.6730215549469
+c2670_sky130_154.log
+Best Delay: 1751.06
+Best Area: 2253.41
+Best Reward: -0.9465265047723087
+Total time: 186.2236135005951
+Best Reward: -0.8469869915653492
+Best Delay: 1421.07
+Best Area: 2223.38
+Best Cells Count: 154
+Total time: 545.9057877063751
+c2670_sky130_222.log
+Best Delay: 1781.76
+Best Area: 2312.22
+Best Reward: -0.9671667029145452
+Total time: 206.09320735931396
+Best Reward: -0.8755261627345947
+Best Delay: 1512.49
+Best Area: 2232.14
+Best Cells Count: 221
+Total time: 493.6709966659546
+c2670_sky130_85.log
+Best Delay: 1709.33
+Best Area: 2448.6
+Best Reward: -0.9748415629811742
+Total time: 184.361421585083
+Best Reward: -0.8876971144778372
+Best Delay: 1446.96
+Best Area: 2398.55
+Best Cells Count: 84
+Total time: 380.8282239437103
+s13207_nan45_16.log
+Best Delay: 576.02
+Best Area: 2220.04
+Best Reward: -0.9727658864180266
+Total time: 175.45143151283264
+Best Reward: -0.9026916373140985
+Best Delay: 522.57
+Best Area: 2107.25
+Best Cells Count: 16
+Total time: 286.7505226135254
+s13207_nan45_35.log
+Best Delay: 593.88
+Best Area: 2033.84
+Best Reward: -0.9454028192530798
+Total time: 175.74019145965576
+Best Reward: -0.9105232828809351
+Best Delay: 558.39
+Best Area: 2006.44
+Best Cells Count: 34
+Total time: 253.53421831130981
+s13207_nan45_54.log
+Best Delay: 578.15
+Best Area: 1992.34
+Best Reward: -0.923232624942783
+Total time: 164.27607703208923
+Best Reward: -0.9002478512277368
+Best Delay: 551.34
+Best Area: 1986.49
+Best Cells Count: 53
+Total time: 211.8133726119995
+s13207_sky130_154.log
+Best Delay: 2753.67
+Best Area: 10625.19
+Best Reward: -0.9293590621855147
+Total time: 276.7510826587677
+Best Reward: -0.8960680815602514
+Best Delay: 2536.92
+Best Area: 10721.53
+Best Cells Count: 153
+Total time: 1016.4573938846588
+s13207_sky130_222.log
+Best Delay: 2705.81
+Best Area: 10854.16
+Best Reward: -0.9311207337751249
+Total time: 279.454541683197
+Best Reward: -0.9161841746119059
+Best Delay: 2616.68
+Best Area: 10866.67
+Best Cells Count: 213
+Total time: 1249.0682289600372
+s13207_sky130_85.log
+Best Delay: 2874.09
+Best Area: 11091.89
+Best Reward: -0.9700903800084106
+Total time: 262.2272689342499
+Best Reward: -0.9206697726410137
+Best Delay: 2594.86
+Best Area: 11065.61
+Best Cells Count: 83
+Total time: 999.0861806869507
